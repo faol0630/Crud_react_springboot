@@ -1,0 +1,35 @@
+#body_new_user {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #313131;
+}
+
+#h1_new_user {
+  color: #ccc;
+}
+
+#body_update_user {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #313131;
+}
+
+#h1_update_user {
+  color: #7b7c22;
+}
+
+#update_user_form {
+  background-color: #7b7c22;
+}
+
+#body_dinamic_table {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#h1_dinamic_table {
+  color: #ccc;
+}

@@ -1,0 +1,7 @@
+.container{
+    background-color: #414141;
+}
+#actions_value{
+    display: flex;
+    flex-direction: row;
+}
