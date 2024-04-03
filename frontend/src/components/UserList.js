@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react' //hooks
 import axios from 'axios'
 import Navbar from './partials/Navbar'
 import { useNavigate } from 'react-router-dom'
+import { Modal } from 'react-bootstrap';
+import Swal from 'sweetalert2'
 
 
 const UserList = () => {
@@ -10,8 +12,13 @@ const UserList = () => {
     const url = 'http://localhost:8080/user1/get_all';
     const [usersList, setUsersList] = useState([]);
     const navigator = useNavigate();
+    // Modals:
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
+    // Id to be passed as a parameter in the modal 
+    const [selectedUserId, setSelectedUserId] = useState(null);
 
-    //cargado por defecto cuando se abre la pagina: 
+    // Loaded by default when the page is opened: 
     useEffect(() => {
         getUsers();
     }, [])
@@ -30,23 +37,43 @@ const UserList = () => {
         navigator(`/get_user/${id}`);
     }
 
-    const deleteUser = async (id) => {
+    const handleDelete = async (id) => {
+
 
         const url_delete = `http://localhost:8080/user1/delete/${id}`;
 
         await axios.delete(url_delete)
 
-        window.location.href = '/';
+        Swal.fire({
+            icon: 'success',
+            title: 'user deleted',
+            text: 'The user has been deleted successfully'
+        })
 
-    }
+        // Close the modal
+        setShowDeleteModal(false);
+        // Update list after deleting
+        getUsers();
 
-    const deleteAll = async () => {
+    };
+
+    const handleDeleteAll = async() => {
 
         const url_delete_all = 'http://localhost:8080/user1/delete_all';
 
         await axios.delete(url_delete_all)
 
-        window.location.href = '/';
+        Swal.fire({
+            icon: 'success',
+            title: 'all users deleted',
+            text: 'All users have been deleted successfully'
+        })
+
+        // Close the modal
+        setShowDeleteAllModal(false);
+        // Update list after deleting
+        getUsers();
+
     }
 
 
@@ -96,8 +123,12 @@ const UserList = () => {
                                                     <button onClick={() => toUpdateUser(user.id)} className='btn btn-warning mx-4'>
                                                         <i className='fa-solid fa-edit'></i>
                                                     </button>
+                                                    <button onClick={() => {
+                                                        setShowDeleteModal(true)
+                                                        ; setSelectedUserId(user.id)
+                                                    }
+                                                    } className='btn btn-danger'>
 
-                                                    <button onClick={() => deleteUser(user.id)} className='btn btn-danger'>
                                                         <i className='fa-solid fa-trash'></i>
                                                     </button>
 
@@ -119,8 +150,49 @@ const UserList = () => {
 
             <div className="row">
                 <div className="col text-center">
-                    <button onClick={() => deleteAll()} className="btn btn-lg btn-danger" id="delete_all">Delete All</button>
+                    <button onClick={() => setShowDeleteAllModal(true)} className="btn btn-lg btn-danger" id="delete_all">Delete All</button>
                 </div>
+            </div>
+
+            {/* MODAL DELETE ONE ---------------------------- */}
+
+            <div>
+
+                <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+
+                    <Modal.Header>
+                        <Modal.Title>Delete User</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
+
+                    <Modal.Footer >
+                        <button onClick={() => handleDelete(selectedUserId)} className='btn btn-danger'>Yes, delete</button>
+                        <button onClick={() => setShowDeleteModal(false)} className='btn btn-secondary'>No, cancel</button>
+                    </Modal.Footer>
+                </Modal>
+
+            </div>
+
+            {/* MODAL DELETE ALL ---------------------------- */}
+
+            <div>
+
+                <Modal show={showDeleteAllModal} onHide={() => setShowDeleteAllModal(false)}>
+
+                    <Modal.Header>
+                                <Modal.Title>Delete All</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>Are you sure to delete all items?</Modal.Body>
+
+                    <Modal.Footer>
+                                <button onClick={() => handleDeleteAll()} className='btn btn-danger'>Yes, delete all</button>
+                                <button onClick={() => setShowDeleteAllModal(false)} className='btn btn-secondary'>No, cancel</button>
+                    </Modal.Footer>
+
+                </Modal>
+
             </div>
 
         </div>
