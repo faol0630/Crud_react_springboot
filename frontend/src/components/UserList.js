@@ -39,7 +39,6 @@ const UserList = () => {
 
     const handleDelete = async (id) => {
 
-
         const url_delete = `http://localhost:8080/user1/delete/${id}`;
 
         await axios.delete(url_delete)
@@ -57,7 +56,7 @@ const UserList = () => {
 
     };
 
-    const handleDeleteAll = async() => {
+    const handleDeleteAll = async () => {
 
         const url_delete_all = 'http://localhost:8080/user1/delete_all';
 
@@ -125,7 +124,7 @@ const UserList = () => {
                                                     </button>
                                                     <button onClick={() => {
                                                         setShowDeleteModal(true)
-                                                        ; setSelectedUserId(user.id)
+                                                            ; setSelectedUserId(user.id)
                                                     }
                                                     } className='btn btn-danger'>
 
@@ -164,7 +163,7 @@ const UserList = () => {
                         <Modal.Title>Delete User</Modal.Title>
                     </Modal.Header>
 
-                    <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
+                    <Modal.Body>Are you sure to delete this user?</Modal.Body>
 
                     <Modal.Footer >
                         <button onClick={() => handleDelete(selectedUserId)} className='btn btn-danger'>Yes, delete</button>
@@ -181,14 +180,14 @@ const UserList = () => {
                 <Modal show={showDeleteAllModal} onHide={() => setShowDeleteAllModal(false)}>
 
                     <Modal.Header>
-                                <Modal.Title>Delete All</Modal.Title>
+                        <Modal.Title>Delete All</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>Are you sure to delete all items?</Modal.Body>
 
                     <Modal.Footer>
-                                <button onClick={() => handleDeleteAll()} className='btn btn-danger'>Yes, delete all</button>
-                                <button onClick={() => setShowDeleteAllModal(false)} className='btn btn-secondary'>No, cancel</button>
+                        <button onClick={() => handleDeleteAll()} className='btn btn-danger'>Yes, delete all</button>
+                        <button onClick={() => setShowDeleteAllModal(false)} className='btn btn-secondary'>No, cancel</button>
                     </Modal.Footer>
 
                 </Modal>

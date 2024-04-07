@@ -17,6 +17,7 @@ const NewUser = () => {
 
 
     const setNewUser = async (event) => {
+
         event.preventDefault()
 
         const newUser1 = {
@@ -36,9 +37,10 @@ const NewUser = () => {
                 icon: 'success',
                 title: 'user created',
                 text: 'The user has been created successfully'
+                
             })
 
-            // Limpiar los campos del formulario después de enviarlos
+            // Clear form fields after submitting
             setName('');
             setLastname('');
             setEmail('');
@@ -48,12 +50,16 @@ const NewUser = () => {
 
         } catch (error) {
 
+            const validationErrors = error.response.data.validationErrors
+            const errorMessages = Object.values(validationErrors)
+            
             console.log(error)
 
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'An error occurred while creating the user'
+                text: errorMessages.join('\n') //fails to create line break
+                            
             })
 
         }

@@ -4,6 +4,7 @@ package com.faol.spring_boot_sqlite.controller;
 import com.faol.spring_boot_sqlite.dto.ResponseDTO;
 import com.faol.spring_boot_sqlite.entities.User1;
 import com.faol.spring_boot_sqlite.services.User1ServicesInt;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class User1Controller {
     User1ServicesInt service;
 
     @GetMapping( value = {"/get_all", "/"})
-    public ResponseEntity<?> getAllUsers() {
+    public ResponseEntity<ResponseDTO> getAllUsers() {
 
         List<User1> userList = service.getAllUsers();
         //HashMap<String, Object> result = new HashMap<>();
@@ -60,7 +61,7 @@ public class User1Controller {
 
     @PostMapping("/new_user")
     public ResponseEntity<?> saveNewUser(
-            @RequestBody User1 requestUser
+           @Valid @RequestBody User1 requestUser
     ) {
 
         User1 user1 = new User1();
@@ -90,7 +91,7 @@ public class User1Controller {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUser(
-            @RequestBody User1 requestUser,
+           @Valid @RequestBody User1 requestUser,
             @PathVariable Long id
     ) {
         Optional<User1> foundUser = service.getUserById(id);

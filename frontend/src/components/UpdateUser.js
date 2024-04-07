@@ -66,7 +66,7 @@ const UpdateUser = () => {
                 text: 'The user has been updated successfully'
             })
 
-            // Limpiar los campos del formulario después de enviarlos
+            // Clear form fields after submitting
             setName('');
             setLastname('');
             setEmail('');
