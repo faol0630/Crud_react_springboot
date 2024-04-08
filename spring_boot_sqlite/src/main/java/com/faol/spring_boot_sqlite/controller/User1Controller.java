@@ -2,6 +2,8 @@ package com.faol.spring_boot_sqlite.controller;
 
 
 import com.faol.spring_boot_sqlite.dto.ResponseDTO;
+import com.faol.spring_boot_sqlite.dto.User1DTO;
+import com.faol.spring_boot_sqlite.dto.User1ToUser1DTO;
 import com.faol.spring_boot_sqlite.entities.User1;
 import com.faol.spring_boot_sqlite.services.User1ServicesInt;
 import jakarta.validation.Valid;
@@ -21,7 +23,10 @@ public class User1Controller {
     @Autowired
     User1ServicesInt service;
 
-    @GetMapping( value = {"/get_all", "/"})
+    User1ToUser1DTO user1ToUser1DTO = new User1ToUser1DTO();
+
+//    @GetMapping(value = {"/get_all", "/"})
+    @GetMapping(value = {"/get_all"})
     public ResponseEntity<ResponseDTO> getAllUsers() {
 
         List<User1> userList = service.getAllUsers();
@@ -45,13 +50,17 @@ public class User1Controller {
     @GetMapping("/get_user/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
 
-        Optional<User1> result = service.getUserById(id);
+        Optional<User1> user1 = service.getUserById(id);
         HashMap<String, Object> response = new HashMap<>();
 
-        if (result.isPresent()) {
+        if (user1.isPresent()) {
+            //entity to DTO:
+            User1DTO user1DTO = user1ToUser1DTO.user1ToUser1DTO(user1.get());
+
             response.put("message", "User found");
-            response.put("user", result.get());
+            response.put("user", user1DTO); //return DTO instead of entity
             return ResponseEntity.status(HttpStatus.OK).body(response);
+
         } else {
             response.put("message", "User not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -61,7 +70,7 @@ public class User1Controller {
 
     @PostMapping("/new_user")
     public ResponseEntity<?> saveNewUser(
-           @Valid @RequestBody User1 requestUser
+            @Valid @RequestBody User1 requestUser
     ) {
 
         User1 user1 = new User1();
@@ -76,8 +85,11 @@ public class User1Controller {
         if (newUser.isPresent()) {
 
             service.saveNewUser(user1);
+            //entity to DTO:
+            User1DTO user1DTO = user1ToUser1DTO.user1ToUser1DTO(user1);
+
             response.put("message", "user created");
-            response.put("user1", user1);
+            response.put("user1", user1DTO);
             System.out.println(response);
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
@@ -91,7 +103,7 @@ public class User1Controller {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUser(
-           @Valid @RequestBody User1 requestUser,
+            @Valid @RequestBody User1 requestUser,
             @PathVariable Long id
     ) {
         Optional<User1> foundUser = service.getUserById(id);
@@ -106,8 +118,11 @@ public class User1Controller {
             user1.setAge(requestUser.getAge());
 
             service.updateUser(user1, id);
+            //entity to DTO:
+            User1DTO user1DTO = user1ToUser1DTO.user1ToUser1DTO(user1);
+
             response.put("message", "user updated");
-            response.put("user updated", user1);
+            response.put("user updated", user1DTO);
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
         } else {
