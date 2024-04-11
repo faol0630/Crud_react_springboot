@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NewUser from './components/NewUser';
 import UpdateUser from './components/UpdateUser';
 import UserList from './components/UserList';
+import Swagger from './components/Swagger';
 //import { MyContext } from './context/MyContext'
 //import { useState } from 'react';
 
@@ -25,6 +26,7 @@ function App() {
           <Route path='/' element={<UserList />} />
           <Route path='/new_user' element={<NewUser />} />
           <Route path='/get_user/:id' element={<UpdateUser />} />
+          <Route path='/swagger' element={<Swagger/>}/>
 
         </Routes>
       {/* </MyContext.Provider> */}

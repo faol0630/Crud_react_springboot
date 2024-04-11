@@ -14,6 +14,10 @@ const Navbar = () => {
                             <a className="nav-link text-light" href="/new_user">New User</a>
                         </li>
 
+                        <li className="nav-item">
+                            <a className="nav-link text-light" href="/swagger">Open Swagger UI</a>
+                        </li>
+
                     </ul>
                 </nav>
             </div>
