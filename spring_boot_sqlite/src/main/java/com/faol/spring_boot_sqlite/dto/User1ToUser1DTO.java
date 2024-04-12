@@ -13,6 +13,7 @@ public class User1ToUser1DTO {
         user1DTO.setLastname(user1.getLastname());
         user1DTO.setEmail(user1.getEmail());
         user1DTO.setAge(user1.getAge());
+//        user1DTO.setAuto(user1.getAuto());
 
         return user1DTO;
 

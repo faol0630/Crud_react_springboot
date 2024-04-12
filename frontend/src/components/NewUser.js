@@ -13,6 +13,7 @@ const NewUser = () => {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [age, setAge] = useState('');
+    const [auto, setAuto] = useState('');
     const navigator = useNavigate();
 
 
@@ -24,7 +25,8 @@ const NewUser = () => {
             name: name,
             lastname: lastname,
             email: email,
-            age: parseInt(age)
+            age: parseInt(age),
+            auto: auto
         }
 
         try {
@@ -45,6 +47,7 @@ const NewUser = () => {
             setLastname('');
             setEmail('');
             setAge('');
+            setAuto('');
 
             navigator('/');
 
@@ -106,6 +109,14 @@ const NewUser = () => {
                             <label htmlFor="age" className="form-label">Age:</label>
                             <input onChange={(e) => setAge(e.target.value)} type="text" className="form-control form-control-lg text-bg-secondary" name="age" id="age" value={age} placeholder="Enter your age" />
                         </div>
+
+                        {/* <div className="my-3"> */}
+                            {/* <label htmlFor="auto" className="form-label">Id Auto:</label> */}
+                            {/* <select onSelect={(e) => setAuto(e.target.value)} type="text" className="form-control form-control-lg text-bg-secondary" name="auto" id="auto" value={auto} placeholder="Enter auto id"></select> */}
+
+                            {/* <input onChange={(e) => setAuto(e.target.value)} type="text" className="form-control form-control-lg text-bg-secondary" name="auto" id="auto" value={auto} placeholder="Enter auto id" /> */}
+
+                        {/* </div> */}
 
                         <button className="btn btn-lg btn-outline-dark" type="submit">Submit</button>
 

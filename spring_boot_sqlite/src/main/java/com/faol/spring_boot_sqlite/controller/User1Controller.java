@@ -73,20 +73,21 @@ public class User1Controller {
             @Valid @RequestBody User1 requestUser
     ) {
 
-        User1 user1 = new User1();
-        user1.setName(requestUser.getName());
-        user1.setLastname(requestUser.getLastname());
-        user1.setEmail(requestUser.getEmail());
-        user1.setAge(requestUser.getAge());
+//        User1 user1 = new User1();
+//        user1.setName(requestUser.getName());
+//        user1.setLastname(requestUser.getLastname());
+//        user1.setEmail(requestUser.getEmail());
+//        user1.setAge(requestUser.getAge());
+//        user1.setAuto(requestUser.getAuto());
 
-        Optional<User1> newUser = Optional.of(user1);
+        Optional<User1> newUser = Optional.of(requestUser);
         HashMap<String, Object> response = new LinkedHashMap<>();
 
         if (newUser.isPresent()) {
 
-            service.saveNewUser(user1);
+            service.saveNewUser(requestUser);
             //entity to DTO:
-            User1DTO user1DTO = user1ToUser1DTO.user1ToUser1DTO(user1);
+            User1DTO user1DTO = user1ToUser1DTO.user1ToUser1DTO(requestUser);
 
             response.put("message", "user created");
             response.put("user1", user1DTO);
@@ -116,6 +117,7 @@ public class User1Controller {
             user1.setLastname(requestUser.getLastname());
             user1.setEmail(requestUser.getEmail());
             user1.setAge(requestUser.getAge());
+//            user1.setAuto(requestUser.getAuto());
 
             service.updateUser(user1, id);
             //entity to DTO:

@@ -103,6 +103,7 @@ const UserList = () => {
                                     <th className="py-2">Name</th>
                                     <th className="py-2">Lastname</th>
                                     <th className="py-2">Email</th>
+                                    {/* <th className="py-2">Auto</th> */}
                                     <th className="py-2">Age</th>
                                     <th className="py-2">Actions</th>
                                 </tr>
@@ -117,6 +118,7 @@ const UserList = () => {
                                                 <td id='name_value'>{user.name}</td>
                                                 <td id='lastname_value'>{user.lastname}</td>
                                                 <td id='email_value'>{user.email}</td>
+                                                {/* <td id='id_autos_value'>{user.auto}</td> */}
                                                 <td id='age_value'>{user.age}</td>
                                                 <td id='actions_value' className='text-center py-2'>
                                                     <button onClick={() => toUpdateUser(user.id)} className='btn btn-warning mx-4'>
@@ -136,7 +138,7 @@ const UserList = () => {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td className='text-center' colSpan="6">No hay usuarios disponibles</td>
+                                            <td className='text-center' colSpan="7">No hay usuarios disponibles</td>
                                         </tr>
                                     )
                                 }

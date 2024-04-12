@@ -1,4 +1,4 @@
-package com.faol.spring_boot_sqlite.respository;
+package com.faol.spring_boot_sqlite.repository;
 
 import com.faol.spring_boot_sqlite.entities.User1;
 import org.springframework.data.jpa.repository.JpaRepository;
