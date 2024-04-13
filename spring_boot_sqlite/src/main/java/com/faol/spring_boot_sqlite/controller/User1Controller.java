@@ -25,7 +25,6 @@ public class User1Controller {
 
     User1ToUser1DTO user1ToUser1DTO = new User1ToUser1DTO();
 
-//    @GetMapping(value = {"/get_all", "/"})
     @GetMapping(value = {"/get_all"})
     public ResponseEntity<ResponseDTO> getAllUsers() {
 
@@ -73,13 +72,6 @@ public class User1Controller {
             @Valid @RequestBody User1 requestUser
     ) {
 
-//        User1 user1 = new User1();
-//        user1.setName(requestUser.getName());
-//        user1.setLastname(requestUser.getLastname());
-//        user1.setEmail(requestUser.getEmail());
-//        user1.setAge(requestUser.getAge());
-//        user1.setAuto(requestUser.getAuto());
-
         Optional<User1> newUser = Optional.of(requestUser);
         HashMap<String, Object> response = new LinkedHashMap<>();
 
@@ -117,7 +109,7 @@ public class User1Controller {
             user1.setLastname(requestUser.getLastname());
             user1.setEmail(requestUser.getEmail());
             user1.setAge(requestUser.getAge());
-//            user1.setAuto(requestUser.getAuto());
+            user1.setAuto(requestUser.getAuto());
 
             service.updateUser(user1, id);
             //entity to DTO:

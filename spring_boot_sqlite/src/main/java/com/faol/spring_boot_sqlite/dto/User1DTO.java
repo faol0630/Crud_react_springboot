@@ -19,5 +19,6 @@ public class User1DTO {
     private String email;
     private int age;
     private Auto auto;
+    private Long autoId;
 
 }

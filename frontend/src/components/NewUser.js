@@ -4,6 +4,7 @@ import Navbar from './partials/Navbar'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 
 const NewUser = () => {
@@ -14,8 +15,24 @@ const NewUser = () => {
     const [email, setEmail] = useState('');
     const [age, setAge] = useState('');
     const [auto, setAuto] = useState('');
+    const [autosList, setAutosList] = useState([]);
     const navigator = useNavigate();
 
+    //-----------------------------------------
+
+    useEffect(() => {
+        getAllAutos();
+    }, [])
+
+    const getAllAutos = async () => {
+
+        const url = "http://localhost:8080/auto/get_all";
+        const response = await axios.get(url)
+        setAutosList(response.data.autosList)
+
+    }
+
+    //-----------------------------------------
 
     const setNewUser = async (event) => {
 
@@ -26,7 +43,9 @@ const NewUser = () => {
             lastname: lastname,
             email: email,
             age: parseInt(age),
-            auto: auto
+            auto: {
+                idAuto: parseInt(auto) 
+            }
         }
 
         try {
@@ -39,7 +58,7 @@ const NewUser = () => {
                 icon: 'success',
                 title: 'user created',
                 text: 'The user has been created successfully'
-                
+
             })
 
             // Clear form fields after submitting
@@ -54,15 +73,15 @@ const NewUser = () => {
         } catch (error) {
 
             const validationErrors = error.response.data.validationErrors
-            const errorMessages = Object.values(validationErrors)
-            
+            const errorMessages = validationErrors ? Object.values(validationErrors) : [];
+
             console.log(error)
 
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: errorMessages.join('\n') //fails to create line break
-                            
+                text: errorMessages.join('\n')
+
             })
 
         }
@@ -110,13 +129,21 @@ const NewUser = () => {
                             <input onChange={(e) => setAge(e.target.value)} type="text" className="form-control form-control-lg text-bg-secondary" name="age" id="age" value={age} placeholder="Enter your age" />
                         </div>
 
-                        {/* <div className="my-3"> */}
-                            {/* <label htmlFor="auto" className="form-label">Id Auto:</label> */}
-                            {/* <select onSelect={(e) => setAuto(e.target.value)} type="text" className="form-control form-control-lg text-bg-secondary" name="auto" id="auto" value={auto} placeholder="Enter auto id"></select> */}
+                        <div className="my-3">
 
-                            {/* <input onChange={(e) => setAuto(e.target.value)} type="text" className="form-control form-control-lg text-bg-secondary" name="auto" id="auto" value={auto} placeholder="Enter auto id" /> */}
+                            <label htmlFor="auto" className="form-label">Auto:</label>
 
-                        {/* </div> */}
+                            <select onChange={(e) => setAuto(e.target.value)} className="form-control form-control-lg text-bg-secondary" name="auto" id="auto">
+                                <option value="">Select an auto</option>
+                                {
+                                    autosList.map((auto) => (
+                                        <option key={auto.idAuto} value={auto.idAuto}>{auto.idAuto + " / " + auto.brand}</option>
+                                    ))
+                                }
+                            </select>
+
+
+                        </div>
 
                         <button className="btn btn-lg btn-outline-dark" type="submit">Submit</button>
 

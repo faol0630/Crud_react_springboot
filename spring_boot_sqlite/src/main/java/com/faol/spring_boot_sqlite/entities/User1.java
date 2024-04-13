@@ -45,24 +45,10 @@ public class User1 {
     @Column(name = "age", nullable = false, length = 3)
     private int age;
 
-    //@JoinColumn(name = "auto_id_auto")
-    //@PrimaryKeyJoinColumn(name = "id_auto")
-    //@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @OneToOne
-//    private Auto auto;
+    @OneToOne
+    @JoinColumn(name = "auto_id_auto")
+    private Auto auto;
 
 }
 
-//ejemplo de JSON agregando new user
-//{
-//        "name": "Diana",
-//        "lastname": "Fig",
-//        "email": "dianafig44@mail.com",
-//        "age": 28,
-//        "auto": {
-//              "idAuto": 2,
-//              "brand": "Toyota",
-//              "year": 2020,
-//              "price": 25000.00
-//        }
-//}
+

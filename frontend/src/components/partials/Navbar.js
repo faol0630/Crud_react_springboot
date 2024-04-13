@@ -18,6 +18,14 @@ const Navbar = () => {
                             <a className="nav-link text-light" href="/swagger">Open Swagger UI</a>
                         </li>
 
+                        <li className="nav-item">
+                            <a className="nav-link text-warning" href="/autos_list">Autos List</a>
+                        </li>
+
+                        <li className="nav-item">
+                            <a className="nav-link text-light" href="/new_auto">New Auto</a>
+                        </li>
+
                     </ul>
                 </nav>
             </div>

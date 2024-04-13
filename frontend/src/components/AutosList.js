@@ -1,86 +1,84 @@
-
-import React, { useEffect, useState } from 'react' //hooks
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import Navbar from './partials/Navbar'
-import { useNavigate } from 'react-router-dom'
 import { Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import Swal from 'sweetalert2'
 
-const UserList = () => {
+const AutosList = () => {
 
-    const url = 'http://localhost:8080/user1/get_all';
-    const [usersList, setUsersList] = useState([]);
+    const url = "http://localhost:8080/auto/get_all";
+    const [autosList, setAutosList] = useState([]);
     const navigator = useNavigate();
     // Modals:
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
     // Id to be passed as a parameter in the modal 
-    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [selectedAutoId, setSelectedAutoId] = useState(null);
 
     // Loaded by default when the page is opened: 
     useEffect(() => {
-        getUsers();
+        getAutos();
     }, [])
 
-    const getUsers = async () => {
+    const getAutos = async () => {
         const response = await axios.get(url)
-        setUsersList(response.data.usersList)
+        setAutosList(response.data.autosList)
     }
 
-    const toUpdateUser = async (id) => {
+    const toUpdateAuto = async (id) => {
 
-        const url_get_user = `http://localhost:8080/user1/get_user/${id}`;
+        const url_get_auto = `http://localhost:8080/auto/get_auto/${id}`;
 
-        await axios.get(url_get_user)
+        await axios.get(url_get_auto)
 
-        navigator(`/get_user/${id}`);
+        navigator(`/get_auto/${id}`);
     }
 
     const handleDelete = async (id) => {
 
-        const url_delete = `http://localhost:8080/user1/delete/${id}`;
+        const url_delete = `http://localhost:8080/auto/delete/${id}`;
 
         await axios.delete(url_delete)
 
         Swal.fire({
             icon: 'success',
-            title: 'user deleted',
-            text: 'The user has been deleted successfully'
+            title: 'auto deleted',
+            text: 'The auto has been deleted successfully'
         })
 
         // Close the modal
         setShowDeleteModal(false);
         // Update list after deleting
-        getUsers();
+        getAutos();
 
     };
 
     const handleDeleteAll = async () => {
 
-        const url_delete_all = 'http://localhost:8080/user1/delete_all';
+        const url_delete_all = 'http://localhost:8080/auto/delete_all';
 
         await axios.delete(url_delete_all)
 
         Swal.fire({
             icon: 'success',
-            title: 'all users deleted',
-            text: 'All users have been deleted successfully'
+            title: 'all autos deleted',
+            text: 'All autos have been deleted successfully'
         })
 
         // Close the modal
         setShowDeleteAllModal(false);
         // Update list after deleting
-        getUsers();
+        getAutos();
 
     }
-
 
     return (
         <div className='container-fluid p-4'>
 
             <div className='row'>
                 <div className='col col-12 text-center pt-3'>
-                    <h1>User List</h1>
+                    <h1>Autos List</h1>
                 </div>
             </div>
 
@@ -99,33 +97,29 @@ const UserList = () => {
                             <thead>
                                 <tr>
                                     <th className="py-2">ID</th>
-                                    <th className="py-2">Name</th>
-                                    <th className="py-2">Lastname</th>
-                                    <th className="py-2">Email</th>
-                                    <th className="py-2">Auto</th>
-                                    <th className="py-2">Age</th>
+                                    <th className="py-2">Brand</th>
+                                    <th className="py-2">Year</th>
+                                    <th className="py-2">Price</th>
                                     <th className="py-2">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className='table-group-divider'>
                                 {
-                                    usersList ? (
+                                    autosList ? (
 
-                                        usersList.map((user, i) => (
-                                            <tr key={user.id}>
-                                                <td id='id_value'>{(user.id)}</td>
-                                                <td id='name_value'>{user.name}</td>
-                                                <td id='lastname_value'>{user.lastname}</td>
-                                                <td id='email_value'>{user.email}</td>
-                                                <td id='id_autos_value'>{user.auto.idAuto + " / " + user.auto.brand}</td>
-                                                <td id='age_value'>{user.age}</td>
-                                                <td id='actions_value' className='text-center py-2'>
-                                                    <button onClick={() => toUpdateUser(user.id)} className='btn btn-warning mx-4'>
+                                        autosList.map((auto, i) => (
+                                            <tr key={auto.idAuto}>
+                                                <td>{auto.idAuto}</td>
+                                                <td>{auto.brand}</td>
+                                                <td>{auto.year}</td>
+                                                <td>{auto.price}</td>
+                                                <td className='text-center py-2'>
+                                                    <button onClick={() => toUpdateAuto(auto.idAuto)} className='btn btn-warning mx-4'>
                                                         <i className='fa-solid fa-edit'></i>
                                                     </button>
                                                     <button onClick={() => {
                                                         setShowDeleteModal(true)
-                                                            ; setSelectedUserId(user.id)
+                                                            ; setSelectedAutoId(auto.idAuto)
                                                     }
                                                     } className='btn btn-danger'>
 
@@ -137,7 +131,7 @@ const UserList = () => {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td className='text-center' colSpan="7">No hay usuarios disponibles</td>
+                                            <td className='text-center' colSpan="5">No hay autos disponibles</td>
                                         </tr>
                                     )
                                 }
@@ -148,12 +142,6 @@ const UserList = () => {
                 </div>
             </div>
 
-            <div className="row">
-                <div className="col text-center">
-                    <button onClick={() => setShowDeleteAllModal(true)} className="btn btn-lg btn-danger" id="delete_all">Delete All</button>
-                </div>
-            </div>
-
             {/* MODAL DELETE ONE ---------------------------- */}
 
             <div>
@@ -161,17 +149,23 @@ const UserList = () => {
                 <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
 
                     <Modal.Header>
-                        <Modal.Title>Delete User</Modal.Title>
+                        <Modal.Title>Delete Auto</Modal.Title>
                     </Modal.Header>
 
-                    <Modal.Body>Are you sure to delete this user?</Modal.Body>
+                    <Modal.Body>Are you sure to delete this auto?</Modal.Body>
 
                     <Modal.Footer >
-                        <button onClick={() => handleDelete(selectedUserId)} className='btn btn-danger'>Yes, delete</button>
+                        <button onClick={() => handleDelete(selectedAutoId)} className='btn btn-danger'>Yes, delete</button>
                         <button onClick={() => setShowDeleteModal(false)} className='btn btn-secondary'>No, cancel</button>
                     </Modal.Footer>
                 </Modal>
 
+            </div>
+
+            <div className="row">
+                <div className="col text-center">
+                    <button onClick={() => setShowDeleteAllModal(true)} className="btn btn-lg btn-danger" id="delete_all">Delete All</button>
+                </div>
             </div>
 
             {/* MODAL DELETE ALL ---------------------------- */}
@@ -195,8 +189,9 @@ const UserList = () => {
 
             </div>
 
+
         </div>
     )
 }
 
-export default UserList
+export default AutosList

@@ -13,7 +13,11 @@ public class User1ToUser1DTO {
         user1DTO.setLastname(user1.getLastname());
         user1DTO.setEmail(user1.getEmail());
         user1DTO.setAge(user1.getAge());
-//        user1DTO.setAuto(user1.getAuto());
+
+        // Assigning only the idAuto to User1DTO
+        if(user1.getAuto() != null) {
+            user1DTO.setAutoId(user1.getAuto().getIdAuto());
+        }
 
         return user1DTO;
 

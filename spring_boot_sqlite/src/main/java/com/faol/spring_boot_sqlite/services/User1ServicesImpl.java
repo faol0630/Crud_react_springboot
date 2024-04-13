@@ -38,7 +38,7 @@ public class User1ServicesImpl implements User1ServicesInt {
             foundUser.get().setLastname(user1.getLastname());
             foundUser.get().setEmail(user1.getEmail());
             foundUser.get().setAge(user1.getAge());
-//            foundUser.get().setAuto(user1.getAuto());
+            foundUser.get().setAuto(user1.getAuto());
             repo.save(foundUser.get());
         }
         return foundUser.get();
